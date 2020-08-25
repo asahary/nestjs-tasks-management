@@ -1,0 +1,25 @@
+version: '3.1'
+services:
+  postgres:
+    image: postgres:9.6.16
+    restart: always
+    ports:
+      - "5435:5432"
+    environment:
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=test
+
+  postgres_seed:
+    image: postgres
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    volumes:
+      - ./doc/data/postgres:/postgres-seed
+    working_dir:
+      /postgres-seed
+    environment:
+          - POSTGRES_PASSWORD=test
+          - POSTGRES_USER=test
+
